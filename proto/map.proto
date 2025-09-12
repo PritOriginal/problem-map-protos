@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package map;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/PritOriginal/problem-map-server/proto/gen";
+
+service Map {
+  rpc GetRegions(google.protobuf.Empty) returns (GetRegionsResponse);
+  rpc GetCities(google.protobuf.Empty) returns (GetCitiesResponse);
+  rpc GetDistricts(google.protobuf.Empty) returns (GetDistrictsResponse);
+  rpc GetMarks(google.protobuf.Empty) returns (GetMarksResponse);
+  rpc AddMark(AddMarkRequest) returns (AddMarkResponse);
+}
+
+message Mark {
+  int64 id = 1;
+  string name = 2;
+  Point geom = 3;
+  int64 type_mark_id = 4;
+  int64 user_id = 5;
+  int64 district_id = 6;
+  int64 number_votes = 7;
+  int64 number_checks = 8;
+}
+
+message Region {
+  int64 id = 1;
+  string name = 2;
+  Polygon geom = 3;
+}
+
+message City {
+  int64 id = 1;
+  string name = 2;
+  int64 region_id = 3;
+  Polygon geom = 4;
+}
+
+message District {
+  int64 id = 1;
+  string name = 2;
+  int64 city_id = 3;
+  Polygon geom = 4;
+}
+
+message GetRegionsResponse { repeated Region regions = 1; }
+
+message GetCitiesResponse { repeated City cities = 1; }
+
+message GetDistrictsResponse { repeated District districts = 1; }
+
+message GetMarksResponse { repeated Mark marks = 1; }
+
+message AddMarkRequest { Mark mark = 1; }
+
+message AddMarkResponse { int64 mark_id = 1; }
+
+message Point { 
+  string type = 1;
+  Coordinates coordinates = 2;
+}
+
+message Polygon {}
+
+message Coordinates {
+  double longitude = 1;
+  double latitude = 2;
+}

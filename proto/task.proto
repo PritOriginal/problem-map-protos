@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package tasks;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/PritOriginal/problem-map-server/proto/gen";
+
+service Tasks {
+  rpc GetTasks(google.protobuf.Empty) returns (GetTasksResponse);
+  rpc GetTaskById(GetTaskByIdRequest) returns (GetTaskByIdResponse);
+  rpc GetTasksByUserId(GetTasksByUserIdRequest)
+      returns (GetTasksByUserIdResponse);
+  rpc AddTask(AddTaskRequest) returns (AddTaskResponse);
+}
+
+message Task {
+  int64 id = 1;
+  string name = 2;
+  int64 user_id = 3;
+}
+
+message GetTasksResponse { repeated Task tasks = 1; }
+
+message GetTaskByIdResponse { Task task = 1; }
+
+message GetTaskByIdRequest { int64 id = 1; }
+
+message GetTasksByUserIdRequest { int64 user_id = 1; }
+
+message GetTasksByUserIdResponse { repeated Task tasks = 1; }
+
+message AddTaskRequest { Task task = 1; }
+
+message AddTaskResponse { int64 task_id = 1; }
