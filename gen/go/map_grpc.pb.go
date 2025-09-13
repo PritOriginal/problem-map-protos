@@ -4,7 +4,7 @@
 // - protoc             v6.32.0
 // source: map.proto
 
-package gen
+package pb
 
 import (
 	context "context"

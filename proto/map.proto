@@ -4,7 +4,7 @@ package map;
 
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/PritOriginal/problem-map-server/proto/gen";
+option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
 
 service Map {
   rpc GetRegions(google.protobuf.Empty) returns (GetRegionsResponse);

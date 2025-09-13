@@ -4,7 +4,7 @@ package tasks;
 
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/PritOriginal/problem-map-server/proto/gen";
+option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
 
 service Tasks {
   rpc GetTasks(google.protobuf.Empty) returns (GetTasksResponse);

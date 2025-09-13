@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: task.proto
 
-package gen
+package pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -418,7 +418,7 @@ const file_task_proto_rawDesc = "" +
 	"\bGetTasks\x12\x16.google.protobuf.Empty\x1a\x17.tasks.GetTasksResponse\x12D\n" +
 	"\vGetTaskById\x12\x19.tasks.GetTaskByIdRequest\x1a\x1a.tasks.GetTaskByIdResponse\x12S\n" +
 	"\x10GetTasksByUserId\x12\x1e.tasks.GetTasksByUserIdRequest\x1a\x1f.tasks.GetTasksByUserIdResponse\x128\n" +
-	"\aAddTask\x12\x15.tasks.AddTaskRequest\x1a\x16.tasks.AddTaskResponseB6Z4github.com/PritOriginal/problem-map-server/proto/genb\x06proto3"
+	"\aAddTask\x12\x15.tasks.AddTaskRequest\x1a\x16.tasks.AddTaskResponseB5Z3github.com/PritOriginal/problem-map-server/proto;pbb\x06proto3"
 
 var (
 	file_task_proto_rawDescOnce sync.Once

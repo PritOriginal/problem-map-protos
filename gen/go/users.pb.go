@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: users.proto
 
-package gen
+package pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -324,7 +324,7 @@ const file_users_proto_rawDesc = "" +
 	"\x05Users\x12D\n" +
 	"\vGetUserById\x12\x19.users.GetUserByIdRequest\x1a\x1a.users.GetUserByIdResponse\x12;\n" +
 	"\bGetUsers\x12\x16.google.protobuf.Empty\x1a\x17.users.GetUsersResponse\x128\n" +
-	"\aAddUser\x12\x15.users.AddUserRequest\x1a\x16.users.AddUserResponseB6Z4github.com/PritOriginal/problem-map-server/proto/genb\x06proto3"
+	"\aAddUser\x12\x15.users.AddUserRequest\x1a\x16.users.AddUserResponseB5Z3github.com/PritOriginal/problem-map-server/proto;pbb\x06proto3"
 
 var (
 	file_users_proto_rawDescOnce sync.Once

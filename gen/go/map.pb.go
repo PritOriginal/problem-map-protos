@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: map.proto
 
-package gen
+package pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -778,7 +778,7 @@ const file_map_proto_rawDesc = "" +
 	"\tGetCities\x12\x16.google.protobuf.Empty\x1a\x16.map.GetCitiesResponse\x12A\n" +
 	"\fGetDistricts\x12\x16.google.protobuf.Empty\x1a\x19.map.GetDistrictsResponse\x129\n" +
 	"\bGetMarks\x12\x16.google.protobuf.Empty\x1a\x15.map.GetMarksResponse\x124\n" +
-	"\aAddMark\x12\x13.map.AddMarkRequest\x1a\x14.map.AddMarkResponseB6Z4github.com/PritOriginal/problem-map-server/proto/genb\x06proto3"
+	"\aAddMark\x12\x13.map.AddMarkRequest\x1a\x14.map.AddMarkResponseB5Z3github.com/PritOriginal/problem-map-server/proto;pbb\x06proto3"
 
 var (
 	file_map_proto_rawDescOnce sync.Once
