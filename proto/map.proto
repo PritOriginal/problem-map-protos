@@ -62,7 +62,10 @@ message Point {
   Coordinates coordinates = 2;
 }
 
-message Polygon {}
+message Polygon {
+  string type = 1;
+  repeated Coordinates coordinates = 2;
+}
 
 message Coordinates {
   double longitude = 1;

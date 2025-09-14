@@ -636,6 +636,8 @@ func (x *Point) GetCoordinates() *Coordinates {
 
 type Polygon struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
+	Coordinates   []*Coordinates         `protobuf:"bytes,2,rep,name=coordinates,proto3" json:"coordinates,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -668,6 +670,20 @@ func (x *Polygon) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Polygon.ProtoReflect.Descriptor instead.
 func (*Polygon) Descriptor() ([]byte, []int) {
 	return file_map_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *Polygon) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *Polygon) GetCoordinates() []*Coordinates {
+	if x != nil {
+		return x.Coordinates
+	}
+	return nil
 }
 
 type Coordinates struct {
@@ -767,8 +783,10 @@ const file_map_proto_rawDesc = "" +
 	"\amark_id\x18\x01 \x01(\x03R\x06markId\"O\n" +
 	"\x05Point\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x122\n" +
-	"\vcoordinates\x18\x02 \x01(\v2\x10.map.CoordinatesR\vcoordinates\"\t\n" +
-	"\aPolygon\"G\n" +
+	"\vcoordinates\x18\x02 \x01(\v2\x10.map.CoordinatesR\vcoordinates\"Q\n" +
+	"\aPolygon\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\tR\x04type\x122\n" +
+	"\vcoordinates\x18\x02 \x03(\v2\x10.map.CoordinatesR\vcoordinates\"G\n" +
 	"\vCoordinates\x12\x1c\n" +
 	"\tlongitude\x18\x01 \x01(\x01R\tlongitude\x12\x1a\n" +
 	"\blatitude\x18\x02 \x01(\x01R\blatitude2\xb5\x02\n" +
@@ -820,21 +838,22 @@ var file_map_proto_depIdxs = []int32{
 	0,  // 7: map.GetMarksResponse.marks:type_name -> map.Mark
 	0,  // 8: map.AddMarkRequest.mark:type_name -> map.Mark
 	12, // 9: map.Point.coordinates:type_name -> map.Coordinates
-	13, // 10: map.Map.GetRegions:input_type -> google.protobuf.Empty
-	13, // 11: map.Map.GetCities:input_type -> google.protobuf.Empty
-	13, // 12: map.Map.GetDistricts:input_type -> google.protobuf.Empty
-	13, // 13: map.Map.GetMarks:input_type -> google.protobuf.Empty
-	8,  // 14: map.Map.AddMark:input_type -> map.AddMarkRequest
-	4,  // 15: map.Map.GetRegions:output_type -> map.GetRegionsResponse
-	5,  // 16: map.Map.GetCities:output_type -> map.GetCitiesResponse
-	6,  // 17: map.Map.GetDistricts:output_type -> map.GetDistrictsResponse
-	7,  // 18: map.Map.GetMarks:output_type -> map.GetMarksResponse
-	9,  // 19: map.Map.AddMark:output_type -> map.AddMarkResponse
-	15, // [15:20] is the sub-list for method output_type
-	10, // [10:15] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	12, // 10: map.Polygon.coordinates:type_name -> map.Coordinates
+	13, // 11: map.Map.GetRegions:input_type -> google.protobuf.Empty
+	13, // 12: map.Map.GetCities:input_type -> google.protobuf.Empty
+	13, // 13: map.Map.GetDistricts:input_type -> google.protobuf.Empty
+	13, // 14: map.Map.GetMarks:input_type -> google.protobuf.Empty
+	8,  // 15: map.Map.AddMark:input_type -> map.AddMarkRequest
+	4,  // 16: map.Map.GetRegions:output_type -> map.GetRegionsResponse
+	5,  // 17: map.Map.GetCities:output_type -> map.GetCitiesResponse
+	6,  // 18: map.Map.GetDistricts:output_type -> map.GetDistrictsResponse
+	7,  // 19: map.Map.GetMarks:output_type -> map.GetMarksResponse
+	9,  // 20: map.Map.AddMark:output_type -> map.AddMarkResponse
+	16, // [16:21] is the sub-list for method output_type
+	11, // [11:16] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_map_proto_init() }
