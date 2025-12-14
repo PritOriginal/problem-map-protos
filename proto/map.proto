@@ -3,6 +3,7 @@ syntax = "proto3";
 package map;
 
 import "google/protobuf/empty.proto";
+import "geo.proto";
 
 option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
 
@@ -15,21 +16,21 @@ service Map {
 message Region {
   int64 id = 1;
   string name = 2;
-  Polygon geom = 3;
+  geo.Polygon geom = 3;
 }
 
 message City {
   int64 id = 1;
   string name = 2;
   int64 region_id = 3;
-  Polygon geom = 4;
+  geo.Polygon geom = 4;
 }
 
 message District {
   int64 id = 1;
   string name = 2;
   int64 city_id = 3;
-  Polygon geom = 4;
+  geo.Polygon geom = 4;
 }
 
 message GetRegionsResponse { repeated Region regions = 1; }
@@ -37,13 +38,3 @@ message GetRegionsResponse { repeated Region regions = 1; }
 message GetCitiesResponse { repeated City cities = 1; }
 
 message GetDistrictsResponse { repeated District districts = 1; }
-
-message Polygon {
-  string type = 1;
-  repeated Coordinates coordinates = 2;
-}
-
-message Coordinates {
-  double longitude = 1;
-  double latitude = 2;
-}
