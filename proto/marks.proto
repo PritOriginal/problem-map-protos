@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package marks;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
+
+service Marks {
+  rpc GetMarks(google.protobuf.Empty) returns (GetMarksResponse);
+  rpc GetMarkById(GetMarkByIdRequest) returns (GetMarkByIdResponse);
+  rpc GetMarksByUserId(GetMarksByUserIdRequest) returns (GetMarksByUserIdResponse);
+  rpc AddMark(AddMarkRequest) returns (AddMarkResponse);
+  rpc GetMarkTypes(google.protobuf.Empty) returns (GetMarkTypesResponse);
+  rpc GetMarkStatuses(google.protobuf.Empty) returns (GetMarkStatusesResponse);
+}
+
+message Mark {
+  int64 id = 1;
+  string name = 2;
+  Point geom = 3;
+  int64 type_mark_id = 4;
+  int64 user_id = 5;
+  int64 district_id = 6;
+  int64 number_votes = 7;
+  int64 number_checks = 8;
+}
+
+message GetMarksResponse { repeated Mark marks = 1; }
+
+message GetMarkByIdRequest { int64 mark_id = 1; }
+
+message GetMarkByIdResponse { Mark mark = 1; }
+
+message GetMarksByUserIdRequest { int64 user_id = 1; }
+
+message GetMarksByUserIdResponse { repeated Mark marks = 1; }
+
+message AddMarkRequest { Mark mark = 1; }
+
+message AddMarkResponse { int64 mark_id = 1; }
+
+message GetMarkTypesResponse { repeated MarkType types = 1; }
+
+message GetMarkStatusesResponse { repeated MarkStatus statuses = 1; }
+
+message Point {
+  string type = 1;
+  Coordinates coordinates = 2;
+}
+
+message Coordinates {
+  double longitude = 1;
+  double latitude = 2;
+}
+
+message MarkType {
+    int64 id = 1;
+    string name = 2;
+}
+
+message MarkStatus {
+    int64 id = 1;
+    string name = 2;
+}
