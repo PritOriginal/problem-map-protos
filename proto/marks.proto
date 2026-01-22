@@ -3,6 +3,7 @@ syntax = "proto3";
 package marks;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 import "geo.proto";
 
 option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
@@ -18,13 +19,15 @@ service Marks {
 
 message Mark {
   int64 id = 1;
-  string name = 2;
+  string description = 2;
   geo.Point geom = 3;
-  int64 type_mark_id = 4;
-  int64 user_id = 5;
-  int64 district_id = 6;
+  int64 mark_type_id = 4;
+  int64 mark_status_id = 5;
+  int64 user_id = 6;
   int64 number_votes = 7;
   int64 number_checks = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
 }
 
 message GetMarksResponse { repeated Mark marks = 1; }
