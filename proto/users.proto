@@ -15,7 +15,9 @@ service Users {
 message User {
   int64 id = 1;
   string name = 2;
-  int64 rating = 3;
+  string login = 3;
+  geo.Point home_point = 4;
+  int64 rating = 5;
 }
 
 message GetUserByIdRequest { int64 id = 1; }
