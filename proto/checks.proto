@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package checks;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
+
+service Checks {
+  rpc GetCheckById(GetCheckByIdRequest) returns (GetCheckByIdResponse);
+  rpc GetChecksByMarkId(GetChecksByMarkIdRequest) returns (GetChecksByMarkIdResponse);
+  rpc GetChecksByUserId(GetChecksByUserIdRequest) returns (GetChecksByUserIdResponse);
+  rpc AddCheck(AddCheckRequest) returns (google.protobuf.Empty);
+}
+
+message Check {
+   int64 id = 1;
+   int64 user_id = 2;
+   string username = 3;
+   int64 mark_id = 4;
+   bool result = 5;
+   string comment = 6;
+   repeated string photos = 7; 
+   google.protobuf.Timestamp created_at = 8;
+   google.protobuf.Timestamp updated_at = 9;
+}
+
+message GetCheckByIdRequest {
+  int64 id = 1;
+}
+
+message GetCheckByIdResponse {
+  Check check = 1;
+}
+
+message GetChecksByMarkIdRequest {
+  int64 mark_id = 1;
+}
+
+message GetChecksByMarkIdResponse {
+  repeated Check checks = 1;
+}
+
+message GetChecksByUserIdRequest {
+  int64 user_id = 1;
+}
+
+message GetChecksByUserIdResponse {
+    repeated Check checks = 1;
+}
+
+message AddCheckRequest {
+  int64 user_id = 1;
+  int64 mark_id = 2;
+  bool result = 3;
+  string comment = 4;
+}
