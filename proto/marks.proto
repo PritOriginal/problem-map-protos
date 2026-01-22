@@ -40,7 +40,11 @@ message GetMarksByUserIdRequest { int64 user_id = 1; }
 
 message GetMarksByUserIdResponse { repeated Mark marks = 1; }
 
-message AddMarkRequest { Mark mark = 1; }
+message AddMarkRequest { 
+  geo.Point point = 1;
+  int64 mark_type_id = 2;
+  string description = 3;
+ }
 
 message AddMarkResponse { int64 mark_id = 1; }
 
