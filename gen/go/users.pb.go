@@ -26,7 +26,9 @@ type User struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Rating        int64                  `protobuf:"varint,3,opt,name=rating,proto3" json:"rating,omitempty"`
+	Login         string                 `protobuf:"bytes,3,opt,name=login,proto3" json:"login,omitempty"`
+	HomePoint     *Point                 `protobuf:"bytes,4,opt,name=home_point,json=homePoint,proto3" json:"home_point,omitempty"`
+	Rating        int64                  `protobuf:"varint,5,opt,name=rating,proto3" json:"rating,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -73,6 +75,20 @@ func (x *User) GetName() string {
 		return x.Name
 	}
 	return ""
+}
+
+func (x *User) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
+func (x *User) GetHomePoint() *Point {
+	if x != nil {
+		return x.HomePoint
+	}
+	return nil
 }
 
 func (x *User) GetRating() int64 {
@@ -214,117 +230,28 @@ func (x *GetUsersResponse) GetUsers() []*User {
 	return nil
 }
 
-type AddUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddUserRequest) Reset() {
-	*x = AddUserRequest{}
-	mi := &file_users_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddUserRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddUserRequest) ProtoMessage() {}
-
-func (x *AddUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_users_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddUserRequest.ProtoReflect.Descriptor instead.
-func (*AddUserRequest) Descriptor() ([]byte, []int) {
-	return file_users_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *AddUserRequest) GetUser() *User {
-	if x != nil {
-		return x.User
-	}
-	return nil
-}
-
-type AddUserResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddUserResponse) Reset() {
-	*x = AddUserResponse{}
-	mi := &file_users_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddUserResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddUserResponse) ProtoMessage() {}
-
-func (x *AddUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_users_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddUserResponse.ProtoReflect.Descriptor instead.
-func (*AddUserResponse) Descriptor() ([]byte, []int) {
-	return file_users_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *AddUserResponse) GetUserId() int64 {
-	if x != nil {
-		return x.UserId
-	}
-	return 0
-}
-
 var File_users_proto protoreflect.FileDescriptor
 
 const file_users_proto_rawDesc = "" +
 	"\n" +
-	"\vusers.proto\x12\x05users\x1a\x1bgoogle/protobuf/empty.proto\"B\n" +
+	"\vusers.proto\x12\x05users\x1a\x1bgoogle/protobuf/empty.proto\x1a\tgeo.proto\"\x83\x01\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
-	"\x06rating\x18\x03 \x01(\x03R\x06rating\"$\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
+	"\x05login\x18\x03 \x01(\tR\x05login\x12)\n" +
+	"\n" +
+	"home_point\x18\x04 \x01(\v2\n" +
+	".geo.PointR\thomePoint\x12\x16\n" +
+	"\x06rating\x18\x05 \x01(\x03R\x06rating\"$\n" +
 	"\x12GetUserByIdRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\"6\n" +
 	"\x13GetUserByIdResponse\x12\x1f\n" +
 	"\x04user\x18\x01 \x01(\v2\v.users.UserR\x04user\"5\n" +
 	"\x10GetUsersResponse\x12!\n" +
-	"\x05users\x18\x01 \x03(\v2\v.users.UserR\x05users\"1\n" +
-	"\x0eAddUserRequest\x12\x1f\n" +
-	"\x04user\x18\x01 \x01(\v2\v.users.UserR\x04user\"*\n" +
-	"\x0fAddUserResponse\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId2\xc4\x01\n" +
+	"\x05users\x18\x01 \x03(\v2\v.users.UserR\x05users2\x8a\x01\n" +
 	"\x05Users\x12D\n" +
 	"\vGetUserById\x12\x19.users.GetUserByIdRequest\x1a\x1a.users.GetUserByIdResponse\x12;\n" +
-	"\bGetUsers\x12\x16.google.protobuf.Empty\x1a\x17.users.GetUsersResponse\x128\n" +
-	"\aAddUser\x12\x15.users.AddUserRequest\x1a\x16.users.AddUserResponseB5Z3github.com/PritOriginal/problem-map-server/proto;pbb\x06proto3"
+	"\bGetUsers\x12\x16.google.protobuf.Empty\x1a\x17.users.GetUsersResponseB5Z3github.com/PritOriginal/problem-map-server/proto;pbb\x06proto3"
 
 var (
 	file_users_proto_rawDescOnce sync.Once
@@ -338,28 +265,25 @@ func file_users_proto_rawDescGZIP() []byte {
 	return file_users_proto_rawDescData
 }
 
-var file_users_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_users_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_users_proto_goTypes = []any{
 	(*User)(nil),                // 0: users.User
 	(*GetUserByIdRequest)(nil),  // 1: users.GetUserByIdRequest
 	(*GetUserByIdResponse)(nil), // 2: users.GetUserByIdResponse
 	(*GetUsersResponse)(nil),    // 3: users.GetUsersResponse
-	(*AddUserRequest)(nil),      // 4: users.AddUserRequest
-	(*AddUserResponse)(nil),     // 5: users.AddUserResponse
-	(*emptypb.Empty)(nil),       // 6: google.protobuf.Empty
+	(*Point)(nil),               // 4: geo.Point
+	(*emptypb.Empty)(nil),       // 5: google.protobuf.Empty
 }
 var file_users_proto_depIdxs = []int32{
-	0, // 0: users.GetUserByIdResponse.user:type_name -> users.User
-	0, // 1: users.GetUsersResponse.users:type_name -> users.User
-	0, // 2: users.AddUserRequest.user:type_name -> users.User
+	4, // 0: users.User.home_point:type_name -> geo.Point
+	0, // 1: users.GetUserByIdResponse.user:type_name -> users.User
+	0, // 2: users.GetUsersResponse.users:type_name -> users.User
 	1, // 3: users.Users.GetUserById:input_type -> users.GetUserByIdRequest
-	6, // 4: users.Users.GetUsers:input_type -> google.protobuf.Empty
-	4, // 5: users.Users.AddUser:input_type -> users.AddUserRequest
-	2, // 6: users.Users.GetUserById:output_type -> users.GetUserByIdResponse
-	3, // 7: users.Users.GetUsers:output_type -> users.GetUsersResponse
-	5, // 8: users.Users.AddUser:output_type -> users.AddUserResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
+	5, // 4: users.Users.GetUsers:input_type -> google.protobuf.Empty
+	2, // 5: users.Users.GetUserById:output_type -> users.GetUserByIdResponse
+	3, // 6: users.Users.GetUsers:output_type -> users.GetUsersResponse
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -370,13 +294,14 @@ func file_users_proto_init() {
 	if File_users_proto != nil {
 		return
 	}
+	file_geo_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_users_proto_rawDesc), len(file_users_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
