@@ -10,6 +10,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -25,13 +26,15 @@ const (
 type Mark struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	Geom          *Point                 `protobuf:"bytes,3,opt,name=geom,proto3" json:"geom,omitempty"`
-	TypeMarkId    int64                  `protobuf:"varint,4,opt,name=type_mark_id,json=typeMarkId,proto3" json:"type_mark_id,omitempty"`
-	UserId        int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	DistrictId    int64                  `protobuf:"varint,6,opt,name=district_id,json=districtId,proto3" json:"district_id,omitempty"`
+	MarkTypeId    int64                  `protobuf:"varint,4,opt,name=mark_type_id,json=markTypeId,proto3" json:"mark_type_id,omitempty"`
+	MarkStatusId  int64                  `protobuf:"varint,5,opt,name=mark_status_id,json=markStatusId,proto3" json:"mark_status_id,omitempty"`
+	UserId        int64                  `protobuf:"varint,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	NumberVotes   int64                  `protobuf:"varint,7,opt,name=number_votes,json=numberVotes,proto3" json:"number_votes,omitempty"`
 	NumberChecks  int64                  `protobuf:"varint,8,opt,name=number_checks,json=numberChecks,proto3" json:"number_checks,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -73,9 +76,9 @@ func (x *Mark) GetId() int64 {
 	return 0
 }
 
-func (x *Mark) GetName() string {
+func (x *Mark) GetDescription() string {
 	if x != nil {
-		return x.Name
+		return x.Description
 	}
 	return ""
 }
@@ -87,9 +90,16 @@ func (x *Mark) GetGeom() *Point {
 	return nil
 }
 
-func (x *Mark) GetTypeMarkId() int64 {
+func (x *Mark) GetMarkTypeId() int64 {
 	if x != nil {
-		return x.TypeMarkId
+		return x.MarkTypeId
+	}
+	return 0
+}
+
+func (x *Mark) GetMarkStatusId() int64 {
+	if x != nil {
+		return x.MarkStatusId
 	}
 	return 0
 }
@@ -97,13 +107,6 @@ func (x *Mark) GetTypeMarkId() int64 {
 func (x *Mark) GetUserId() int64 {
 	if x != nil {
 		return x.UserId
-	}
-	return 0
-}
-
-func (x *Mark) GetDistrictId() int64 {
-	if x != nil {
-		return x.DistrictId
 	}
 	return 0
 }
@@ -120,6 +123,20 @@ func (x *Mark) GetNumberChecks() int64 {
 		return x.NumberChecks
 	}
 	return 0
+}
+
+func (x *Mark) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *Mark) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
 }
 
 type GetMarksResponse struct {
@@ -344,7 +361,9 @@ func (x *GetMarksByUserIdResponse) GetMarks() []*Mark {
 
 type AddMarkRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Mark          *Mark                  `protobuf:"bytes,1,opt,name=mark,proto3" json:"mark,omitempty"`
+	Point         *Point                 `protobuf:"bytes,1,opt,name=point,proto3" json:"point,omitempty"`
+	MarkTypeId    int64                  `protobuf:"varint,2,opt,name=mark_type_id,json=markTypeId,proto3" json:"mark_type_id,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -379,11 +398,25 @@ func (*AddMarkRequest) Descriptor() ([]byte, []int) {
 	return file_marks_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *AddMarkRequest) GetMark() *Mark {
+func (x *AddMarkRequest) GetPoint() *Point {
 	if x != nil {
-		return x.Mark
+		return x.Point
 	}
 	return nil
+}
+
+func (x *AddMarkRequest) GetMarkTypeId() int64 {
+	if x != nil {
+		return x.MarkTypeId
+	}
+	return 0
+}
+
+func (x *AddMarkRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
 }
 
 type AddMarkResponse struct {
@@ -626,19 +659,23 @@ var File_marks_proto protoreflect.FileDescriptor
 
 const file_marks_proto_rawDesc = "" +
 	"\n" +
-	"\vmarks.proto\x12\x05marks\x1a\x1bgoogle/protobuf/empty.proto\x1a\tgeo.proto\"\xee\x01\n" +
+	"\vmarks.proto\x12\x05marks\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\tgeo.proto\"\xf7\x02\n" +
 	"\x04Mark\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12 \n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1e\n" +
 	"\x04geom\x18\x03 \x01(\v2\n" +
 	".geo.PointR\x04geom\x12 \n" +
-	"\ftype_mark_id\x18\x04 \x01(\x03R\n" +
-	"typeMarkId\x12\x17\n" +
-	"\auser_id\x18\x05 \x01(\x03R\x06userId\x12\x1f\n" +
-	"\vdistrict_id\x18\x06 \x01(\x03R\n" +
-	"districtId\x12!\n" +
+	"\fmark_type_id\x18\x04 \x01(\x03R\n" +
+	"markTypeId\x12$\n" +
+	"\x0emark_status_id\x18\x05 \x01(\x03R\fmarkStatusId\x12\x17\n" +
+	"\auser_id\x18\x06 \x01(\x03R\x06userId\x12!\n" +
 	"\fnumber_votes\x18\a \x01(\x03R\vnumberVotes\x12#\n" +
-	"\rnumber_checks\x18\b \x01(\x03R\fnumberChecks\"5\n" +
+	"\rnumber_checks\x18\b \x01(\x03R\fnumberChecks\x129\n" +
+	"\n" +
+	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"5\n" +
 	"\x10GetMarksResponse\x12!\n" +
 	"\x05marks\x18\x01 \x03(\v2\v.marks.MarkR\x05marks\"-\n" +
 	"\x12GetMarkByIdRequest\x12\x17\n" +
@@ -648,9 +685,13 @@ const file_marks_proto_rawDesc = "" +
 	"\x17GetMarksByUserIdRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\"=\n" +
 	"\x18GetMarksByUserIdResponse\x12!\n" +
-	"\x05marks\x18\x01 \x03(\v2\v.marks.MarkR\x05marks\"1\n" +
-	"\x0eAddMarkRequest\x12\x1f\n" +
-	"\x04mark\x18\x01 \x01(\v2\v.marks.MarkR\x04mark\"*\n" +
+	"\x05marks\x18\x01 \x03(\v2\v.marks.MarkR\x05marks\"v\n" +
+	"\x0eAddMarkRequest\x12 \n" +
+	"\x05point\x18\x01 \x01(\v2\n" +
+	".geo.PointR\x05point\x12 \n" +
+	"\fmark_type_id\x18\x02 \x01(\x03R\n" +
+	"markTypeId\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\"*\n" +
 	"\x0fAddMarkResponse\x12\x17\n" +
 	"\amark_id\x18\x01 \x01(\x03R\x06markId\"=\n" +
 	"\x14GetMarkTypesResponse\x12%\n" +
@@ -699,33 +740,36 @@ var file_marks_proto_goTypes = []any{
 	(*MarkType)(nil),                 // 10: marks.MarkType
 	(*MarkStatus)(nil),               // 11: marks.MarkStatus
 	(*Point)(nil),                    // 12: geo.Point
-	(*emptypb.Empty)(nil),            // 13: google.protobuf.Empty
+	(*timestamppb.Timestamp)(nil),    // 13: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),            // 14: google.protobuf.Empty
 }
 var file_marks_proto_depIdxs = []int32{
 	12, // 0: marks.Mark.geom:type_name -> geo.Point
-	0,  // 1: marks.GetMarksResponse.marks:type_name -> marks.Mark
-	0,  // 2: marks.GetMarkByIdResponse.mark:type_name -> marks.Mark
-	0,  // 3: marks.GetMarksByUserIdResponse.marks:type_name -> marks.Mark
-	0,  // 4: marks.AddMarkRequest.mark:type_name -> marks.Mark
-	10, // 5: marks.GetMarkTypesResponse.types:type_name -> marks.MarkType
-	11, // 6: marks.GetMarkStatusesResponse.statuses:type_name -> marks.MarkStatus
-	13, // 7: marks.Marks.GetMarks:input_type -> google.protobuf.Empty
-	2,  // 8: marks.Marks.GetMarkById:input_type -> marks.GetMarkByIdRequest
-	4,  // 9: marks.Marks.GetMarksByUserId:input_type -> marks.GetMarksByUserIdRequest
-	6,  // 10: marks.Marks.AddMark:input_type -> marks.AddMarkRequest
-	13, // 11: marks.Marks.GetMarkTypes:input_type -> google.protobuf.Empty
-	13, // 12: marks.Marks.GetMarkStatuses:input_type -> google.protobuf.Empty
-	1,  // 13: marks.Marks.GetMarks:output_type -> marks.GetMarksResponse
-	3,  // 14: marks.Marks.GetMarkById:output_type -> marks.GetMarkByIdResponse
-	5,  // 15: marks.Marks.GetMarksByUserId:output_type -> marks.GetMarksByUserIdResponse
-	7,  // 16: marks.Marks.AddMark:output_type -> marks.AddMarkResponse
-	8,  // 17: marks.Marks.GetMarkTypes:output_type -> marks.GetMarkTypesResponse
-	9,  // 18: marks.Marks.GetMarkStatuses:output_type -> marks.GetMarkStatusesResponse
-	13, // [13:19] is the sub-list for method output_type
-	7,  // [7:13] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	13, // 1: marks.Mark.created_at:type_name -> google.protobuf.Timestamp
+	13, // 2: marks.Mark.updated_at:type_name -> google.protobuf.Timestamp
+	0,  // 3: marks.GetMarksResponse.marks:type_name -> marks.Mark
+	0,  // 4: marks.GetMarkByIdResponse.mark:type_name -> marks.Mark
+	0,  // 5: marks.GetMarksByUserIdResponse.marks:type_name -> marks.Mark
+	12, // 6: marks.AddMarkRequest.point:type_name -> geo.Point
+	10, // 7: marks.GetMarkTypesResponse.types:type_name -> marks.MarkType
+	11, // 8: marks.GetMarkStatusesResponse.statuses:type_name -> marks.MarkStatus
+	14, // 9: marks.Marks.GetMarks:input_type -> google.protobuf.Empty
+	2,  // 10: marks.Marks.GetMarkById:input_type -> marks.GetMarkByIdRequest
+	4,  // 11: marks.Marks.GetMarksByUserId:input_type -> marks.GetMarksByUserIdRequest
+	6,  // 12: marks.Marks.AddMark:input_type -> marks.AddMarkRequest
+	14, // 13: marks.Marks.GetMarkTypes:input_type -> google.protobuf.Empty
+	14, // 14: marks.Marks.GetMarkStatuses:input_type -> google.protobuf.Empty
+	1,  // 15: marks.Marks.GetMarks:output_type -> marks.GetMarksResponse
+	3,  // 16: marks.Marks.GetMarkById:output_type -> marks.GetMarkByIdResponse
+	5,  // 17: marks.Marks.GetMarksByUserId:output_type -> marks.GetMarksByUserIdResponse
+	7,  // 18: marks.Marks.AddMark:output_type -> marks.AddMarkResponse
+	8,  // 19: marks.Marks.GetMarkTypes:output_type -> marks.GetMarkTypesResponse
+	9,  // 20: marks.Marks.GetMarkStatuses:output_type -> marks.GetMarkStatusesResponse
+	15, // [15:21] is the sub-list for method output_type
+	9,  // [9:15] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_marks_proto_init() }
