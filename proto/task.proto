@@ -32,6 +32,10 @@ message GetTasksByUserIdRequest { int64 user_id = 1; }
 
 message GetTasksByUserIdResponse { repeated Task tasks = 1; }
 
-message AddTaskRequest { Task task = 1; }
+message AddTaskRequest { 
+  string name = 1;
+  int64 user_id = 2;
+  int64 mark_id = 3;
+}
 
 message AddTaskResponse { int64 task_id = 1; }
