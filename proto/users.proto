@@ -3,13 +3,13 @@ syntax = "proto3";
 package users;
 
 import "google/protobuf/empty.proto";
+import "geo.proto";
 
 option go_package = "github.com/PritOriginal/problem-map-server/proto;pb";
 
 service Users {
   rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse);
   rpc GetUsers(google.protobuf.Empty) returns (GetUsersResponse);
-  rpc AddUser(AddUserRequest) returns (AddUserResponse);
 }
 
 message User {
@@ -25,7 +25,3 @@ message GetUserByIdRequest { int64 id = 1; }
 message GetUserByIdResponse { User user = 1; }
 
 message GetUsersResponse { repeated User users = 1; }
-
-message AddUserRequest { User user = 1; }
-
-message AddUserResponse { int64 user_id = 1; }
