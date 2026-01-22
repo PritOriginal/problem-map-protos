@@ -27,6 +27,8 @@ type Task struct {
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	UserId        int64                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	MarkId        int64                  `protobuf:"varint,4,opt,name=mark_id,json=markId,proto3" json:"mark_id,omitempty"`
+	StatusId      int64                  `protobuf:"varint,5,opt,name=status_id,json=statusId,proto3" json:"status_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -78,6 +80,20 @@ func (x *Task) GetName() string {
 func (x *Task) GetUserId() int64 {
 	if x != nil {
 		return x.UserId
+	}
+	return 0
+}
+
+func (x *Task) GetMarkId() int64 {
+	if x != nil {
+		return x.MarkId
+	}
+	return 0
+}
+
+func (x *Task) GetStatusId() int64 {
+	if x != nil {
+		return x.StatusId
 	}
 	return 0
 }
@@ -304,7 +320,9 @@ func (x *GetTasksByUserIdResponse) GetTasks() []*Task {
 
 type AddTaskRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Task          *Task                  `protobuf:"bytes,1,opt,name=task,proto3" json:"task,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	MarkId        int64                  `protobuf:"varint,3,opt,name=mark_id,json=markId,proto3" json:"mark_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -339,11 +357,25 @@ func (*AddTaskRequest) Descriptor() ([]byte, []int) {
 	return file_task_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *AddTaskRequest) GetTask() *Task {
+func (x *AddTaskRequest) GetName() string {
 	if x != nil {
-		return x.Task
+		return x.Name
 	}
-	return nil
+	return ""
+}
+
+func (x *AddTaskRequest) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *AddTaskRequest) GetMarkId() int64 {
+	if x != nil {
+		return x.MarkId
+	}
+	return 0
 }
 
 type AddTaskResponse struct {
@@ -395,11 +427,13 @@ var File_task_proto protoreflect.FileDescriptor
 const file_task_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"task.proto\x12\x05tasks\x1a\x1bgoogle/protobuf/empty.proto\"C\n" +
+	"task.proto\x12\x05tasks\x1a\x1bgoogle/protobuf/empty.proto\"y\n" +
 	"\x04Task\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\x03R\x06userId\"5\n" +
+	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12\x17\n" +
+	"\amark_id\x18\x04 \x01(\x03R\x06markId\x12\x1b\n" +
+	"\tstatus_id\x18\x05 \x01(\x03R\bstatusId\"5\n" +
 	"\x10GetTasksResponse\x12!\n" +
 	"\x05tasks\x18\x01 \x03(\v2\v.tasks.TaskR\x05tasks\"6\n" +
 	"\x13GetTaskByIdResponse\x12\x1f\n" +
@@ -409,9 +443,11 @@ const file_task_proto_rawDesc = "" +
 	"\x17GetTasksByUserIdRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\"=\n" +
 	"\x18GetTasksByUserIdResponse\x12!\n" +
-	"\x05tasks\x18\x01 \x03(\v2\v.tasks.TaskR\x05tasks\"1\n" +
-	"\x0eAddTaskRequest\x12\x1f\n" +
-	"\x04task\x18\x01 \x01(\v2\v.tasks.TaskR\x04task\"*\n" +
+	"\x05tasks\x18\x01 \x03(\v2\v.tasks.TaskR\x05tasks\"V\n" +
+	"\x0eAddTaskRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12\x17\n" +
+	"\amark_id\x18\x03 \x01(\x03R\x06markId\"*\n" +
 	"\x0fAddTaskResponse\x12\x17\n" +
 	"\atask_id\x18\x01 \x01(\x03R\x06taskId2\x99\x02\n" +
 	"\x05Tasks\x12;\n" +
@@ -448,20 +484,19 @@ var file_task_proto_depIdxs = []int32{
 	0, // 0: tasks.GetTasksResponse.tasks:type_name -> tasks.Task
 	0, // 1: tasks.GetTaskByIdResponse.task:type_name -> tasks.Task
 	0, // 2: tasks.GetTasksByUserIdResponse.tasks:type_name -> tasks.Task
-	0, // 3: tasks.AddTaskRequest.task:type_name -> tasks.Task
-	8, // 4: tasks.Tasks.GetTasks:input_type -> google.protobuf.Empty
-	3, // 5: tasks.Tasks.GetTaskById:input_type -> tasks.GetTaskByIdRequest
-	4, // 6: tasks.Tasks.GetTasksByUserId:input_type -> tasks.GetTasksByUserIdRequest
-	6, // 7: tasks.Tasks.AddTask:input_type -> tasks.AddTaskRequest
-	1, // 8: tasks.Tasks.GetTasks:output_type -> tasks.GetTasksResponse
-	2, // 9: tasks.Tasks.GetTaskById:output_type -> tasks.GetTaskByIdResponse
-	5, // 10: tasks.Tasks.GetTasksByUserId:output_type -> tasks.GetTasksByUserIdResponse
-	7, // 11: tasks.Tasks.AddTask:output_type -> tasks.AddTaskResponse
-	8, // [8:12] is the sub-list for method output_type
-	4, // [4:8] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	8, // 3: tasks.Tasks.GetTasks:input_type -> google.protobuf.Empty
+	3, // 4: tasks.Tasks.GetTaskById:input_type -> tasks.GetTaskByIdRequest
+	4, // 5: tasks.Tasks.GetTasksByUserId:input_type -> tasks.GetTasksByUserIdRequest
+	6, // 6: tasks.Tasks.AddTask:input_type -> tasks.AddTaskRequest
+	1, // 7: tasks.Tasks.GetTasks:output_type -> tasks.GetTasksResponse
+	2, // 8: tasks.Tasks.GetTaskById:output_type -> tasks.GetTaskByIdResponse
+	5, // 9: tasks.Tasks.GetTasksByUserId:output_type -> tasks.GetTasksByUserIdResponse
+	7, // 10: tasks.Tasks.AddTask:output_type -> tasks.AddTaskResponse
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_task_proto_init() }
