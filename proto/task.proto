@@ -18,6 +18,8 @@ message Task {
   int64 id = 1;
   string name = 2;
   int64 user_id = 3;
+  int64 mark_id = 4;
+  int64 status_id = 5;
 }
 
 message GetTasksResponse { repeated Task tasks = 1; }
